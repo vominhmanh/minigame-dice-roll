@@ -193,6 +193,7 @@ body {
   transition: transform 7s ease-out;
 }
 .die-item {
+  border: 2px gray solid;
   background-color: white;
   background-size: 100%;
   box-shadow: inset -0.35rem 0.35rem 0.75rem rgba(0, 0, 0, 0.3),
