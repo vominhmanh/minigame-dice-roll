@@ -1,51 +1,54 @@
 <template>
-  <div class="card card-body m-1">
+  <div class="card card-body">
     <div class="row">
       <div class="col-9">
-        <div>Tên người chơi:</div>
         <div>
-          <input type="text" id="user-name" name="user_name" aria-label="name"/>
+          {{ userIndex + 1 }}.
+          <span>{{userChoice.name || 'Người chơi'}} </span>
+          <span> - {{userChoice.role}} </span>
+          <span> - {{userChoice.code}}</span>
+          <span> - {{userChoice.note}}</span>
         </div>
       </div>
       <div class="col-3">
-        <button class="btn btn-sm btn-outline text-danger" @click="clearBet()">Chọn lại</button>
+        <button class="btn btn-sm btn-outline text-danger" @click="clearBet()">Xóa</button>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-2">
-        <button class="btn btn-outline" @click="bet(1)">
+      <div class="col-2" v-if="userChoice.choices[1] > 0">
+        <button class="btn btn-outline">
           <img src="../assets/dice-side-1.png" alt="1" width="30">
           <span v-show="userChoice.choices[1] > 0">{{userChoice.choices[1]}}</span>
 
         </button>
       </div>
-      <div class="col-2">
-        <button class="btn btn-outline" @click="bet(2)">
+      <div class="col-2" v-if="userChoice.choices[2] > 0">
+        <button class="btn btn-outline">
           <img src="../assets/dice-side-2.png" alt="2" width="30">
           <span v-show="userChoice.choices[2] > 0">{{userChoice.choices[2]}}</span>
         </button>
       </div>
-      <div class="col-2">
-        <button class="btn btn-outline" @click="bet(3)">
+      <div class="col-2" v-if="userChoice.choices[3] > 0">
+        <button class="btn btn-outline" >
           <img src="../assets/dice-side-3.png" alt="3" width="30">
           <span v-show="userChoice.choices[3] > 0">{{userChoice.choices[3]}}</span>
         </button>
       </div>
-      <div class="col-2">
-        <button class="btn btn-outline" @click="bet(4)">
+      <div class="col-2" v-if="userChoice.choices[4] > 0">
+        <button class="btn btn-outline" >
           <img src="../assets/dice-side-4.png" alt="4" width="30">
           <span v-show="userChoice.choices[4] > 0">{{userChoice.choices[4]}}</span>
         </button>
       </div>
-      <div class="col-2">
-        <button class="btn btn-outline" @click="bet(5)">
+      <div class="col-2" v-if="userChoice.choices[5] > 0">
+        <button class="btn btn-outline">
           <img src="../assets/dice-side-5.png" alt="5" width="30">
           <span v-show="userChoice.choices[5] > 0">{{userChoice.choices[5]}}</span>
         </button>
       </div>
-      <div class="col-2">
-        <button class="btn btn-outline" @click="bet(6)">
+      <div class="col-2" v-if="userChoice.choices[6] > 0">
+        <button class="btn btn-outline">
           <img src="../assets/dice-side-6.png" alt="6" width="30">
           <span v-show="userChoice.choices[6] > 0">{{userChoice.choices[6]}}</span>
         </button>
@@ -74,7 +77,9 @@ export default {
       required: true,
     },
   },
-  data() {
+  data: () => {
+    return {
+    }
   },
   methods: {
     bet(i) {
