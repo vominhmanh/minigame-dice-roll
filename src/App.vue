@@ -6,9 +6,10 @@
       </div>
       <div class="container text-center">
         <DiceRoll msg="Welcome to Your Vue.js App" class="mb-5" @updateResults="updateResults"/>
-        <div style="position: relative">
+        <div style="position: relative" class="shadow shadow-lg">
           <BettingPlacement @placeABet="placeABet"/>
-          <div v-if="startDiceRoll" style="position: absolute; width: 100%; height: 100%; background-color: gray; top: 0; opacity: 0.7"></div>
+          <div v-if="startDiceRoll"
+               style="position: absolute; width: 100%; height: 100%; background-color: gray; top: 0; opacity: 0.7"></div>
         </div>
       </div>
     </div>
@@ -43,24 +44,50 @@ export default {
     return {
       userChoices: [],
       results: [],
-      startDiceRoll: false
+      startDiceRoll: false,
+      readyForNewTurn: false,
+      usersHaveJoined: {},
     }
   },
   methods: {
     async updateResults(results) {
       this.startDiceRoll = true;
+      this.readyForNewTurn = true;
+      let userChoices = this.userChoices.map((user) => {
+        let score = 0;
+        results.forEach((result) => {
+          score += user.choices[result];
+        });
+        // eslint-disable-next-line no-param-reassign
+        user = {...user, score: score};
+        return user;
+      });
+
+      const formattedUserChoices = userChoices.map((user) => ({
+        'code': user.code,
+        'score': user.score,
+      }))
+
+      if (formattedUserChoices.length > 0) {
+        try {
+          const response = await this.axios.post('https://chiakhoathongminh.vn/api/campaigns/set-score-for-participants', {scores: formattedUserChoices})
+          console.log(response)
+          const usersHaveJoined = response.data.data.participant_have_joined
+          if (Object.keys(usersHaveJoined).length > 0) {
+            userChoices = userChoices.map((userChoice) => ({
+              ...userChoice,
+              has_joined: !!usersHaveJoined[userChoice.code]
+            }))
+          }
+        } catch (e) {
+          console.log(e)
+        }
+      }
+
       setTimeout(() => {
         this.startDiceRoll = false;
         this.results = results;
-        this.userChoices = this.userChoices.map((user) => {
-          let score = 0;
-          this.results.forEach((result) => {
-            score += user.choices[result];
-          });
-          // eslint-disable-next-line no-param-reassign
-          user = {...user, score: score};
-          return user;
-        });
+        this.userChoices = userChoices
       }, 9000);
     },
     makeChoice(i, userIndex) {
@@ -73,6 +100,10 @@ export default {
       }
     },
     placeABet(name, role, code, note, choices) {
+      if (this.readyForNewTurn) {
+        this.userChoices = [];
+        this.readyForNewTurn = false
+      }
       this.userChoices.push({
         id: Math.random(),
         choices: [...choices],
@@ -103,6 +134,6 @@ export default {
   background: #5f2c82; /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #49a09d, #5f2c82); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, #49a09d, #5f2c82); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  height: 100vh;
+  height: 100%;
 }
 </style>

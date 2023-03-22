@@ -2,32 +2,32 @@
   <div class="m-5">
     <div class="dice">
       <ol class="die-list even-roll" data-roll="1" id="die-1">
-        <li class="die-item" data-side="1">
+        <li class="die-item" data-side="1" dice-id="1">
           <span class="dot"></span>
         </li>
-        <li class="die-item" data-side="2">
-          <span class="dot"></span>
-          <span class="dot"></span>
-        </li>
-        <li class="die-item" data-side="3">
-          <span class="dot"></span>
+        <li class="die-item" data-side="2" dice-id="1">
           <span class="dot"></span>
           <span class="dot"></span>
         </li>
-        <li class="die-item" data-side="4">
-          <span class="dot"></span>
+        <li class="die-item" data-side="3" dice-id="1">
           <span class="dot"></span>
           <span class="dot"></span>
           <span class="dot"></span>
         </li>
-        <li class="die-item" data-side="5">
-          <span class="dot"></span>
+        <li class="die-item" data-side="4" dice-id="1">
           <span class="dot"></span>
           <span class="dot"></span>
           <span class="dot"></span>
           <span class="dot"></span>
         </li>
-        <li class="die-item" data-side="6">
+        <li class="die-item" data-side="5" dice-id="1">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </li>
+        <li class="die-item" data-side="6" dice-id="1">
           <span class="dot"></span>
           <span class="dot"></span>
           <span class="dot"></span>
@@ -37,32 +37,32 @@
         </li>
       </ol>
       <ol class="die-list odd-roll" data-roll="1" id="die-2">
-        <li class="die-item" data-side="1">
+        <li class="die-item" data-side="1" dice-id="2">
           <span class="dot"></span>
         </li>
-        <li class="die-item" data-side="2">
-          <span class="dot"></span>
-          <span class="dot"></span>
-        </li>
-        <li class="die-item" data-side="3">
-          <span class="dot"></span>
+        <li class="die-item" data-side="2" dice-id="2">
           <span class="dot"></span>
           <span class="dot"></span>
         </li>
-        <li class="die-item" data-side="4">
-          <span class="dot"></span>
+        <li class="die-item" data-side="3" dice-id="2">
           <span class="dot"></span>
           <span class="dot"></span>
           <span class="dot"></span>
         </li>
-        <li class="die-item" data-side="5">
-          <span class="dot"></span>
+        <li class="die-item" data-side="4" dice-id="2">
           <span class="dot"></span>
           <span class="dot"></span>
           <span class="dot"></span>
           <span class="dot"></span>
         </li>
-        <li class="die-item" data-side="6">
+        <li class="die-item" data-side="5" dice-id="2">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </li>
+        <li class="die-item" data-side="6" dice-id="2">
           <span class="dot"></span>
           <span class="dot"></span>
           <span class="dot"></span>
@@ -71,33 +71,33 @@
           <span class="dot"></span>
         </li>
       </ol>
-      <ol class="die-list odd-roll mid-roll" data-roll="1" id="die-2">
-        <li class="die-item" data-side="1">
+      <ol class="die-list odd-roll mid-roll" data-roll="1" id="die-3">
+        <li class="die-item" data-side="1" dice-id="3">
           <span class="dot"></span>
         </li>
-        <li class="die-item" data-side="2">
-          <span class="dot"></span>
-          <span class="dot"></span>
-        </li>
-        <li class="die-item" data-side="3">
-          <span class="dot"></span>
+        <li class="die-item" data-side="2" dice-id="3">
           <span class="dot"></span>
           <span class="dot"></span>
         </li>
-        <li class="die-item" data-side="4">
-          <span class="dot"></span>
+        <li class="die-item" data-side="3" dice-id="3">
           <span class="dot"></span>
           <span class="dot"></span>
           <span class="dot"></span>
         </li>
-        <li class="die-item" data-side="5">
-          <span class="dot"></span>
+        <li class="die-item" data-side="4" dice-id="3">
           <span class="dot"></span>
           <span class="dot"></span>
           <span class="dot"></span>
           <span class="dot"></span>
         </li>
-        <li class="die-item" data-side="6">
+        <li class="die-item" data-side="5" dice-id="3">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </li>
+        <li class="die-item" data-side="6" dice-id="3">
           <span class="dot"></span>
           <span class="dot"></span>
           <span class="dot"></span>
@@ -118,6 +118,15 @@ export default {
     msg: String,
     results: Array,
   },
+  mounted() {
+    const dice = [...document.querySelectorAll('.die-list')];
+    dice.forEach((die) => {
+      die.childNodes.forEach((diceItem) => {
+        const randomNumber = this.getRandomNumber(1, 16);
+        diceItem.classList.add(`dice-image-${randomNumber}`)
+      })
+    })
+  },
   methods: {
     toggleClasses(die) {
       die.classList.toggle('odd-roll');
@@ -131,10 +140,15 @@ export default {
       // eslint-disable-next-line vue/no-mutating-props
       const results = [];
       dice.forEach((die) => {
+        const diceItems = die.childNodes
         this.toggleClasses(die);
-        const randomNumber = this.getRandomNumber(1, 6);
+        const side = this.getRandomNumber(1, 6);
+        const randomNumber = this.getRandomNumber(1, 16);
+        console.log(randomNumber)
         // eslint-disable-next-line no-param-reassign
-        die.dataset.roll = randomNumber;
+        die.dataset.roll = side;
+        diceItems[side-1].className = diceItems[side-1].className.replace(/dice-image-\d+/g, '')
+        diceItems[side-1].classList.add(`dice-image-${randomNumber}`)
         // eslint-disable-next-line vue/no-mutating-props
         results.push(randomNumber);
       });
@@ -211,23 +225,53 @@ body {
   padding: 1rem !important;
   width: 100% !important;
 }
-.die-item[data-side="1"] {
+.dice-image-1 {
   background-image: url('../assets/dice-side-1.png');
 }
-.die-item[data-side="2"] {
+.dice-image-2 {
   background-image: url('../assets/dice-side-2.png');
 }
-.die-item[data-side="3"] {
+.dice-image-3 {
   background-image: url('../assets/dice-side-3.png');
 }
-.die-item[data-side="4"] {
+.dice-image-4 {
   background-image: url('../assets/dice-side-4.png');
 }
-.die-item[data-side="5"] {
+.dice-image-5 {
   background-image: url('../assets/dice-side-5.png');
 }
-.die-item[data-side="6"] {
+.dice-image-6 {
   background-image: url('../assets/dice-side-6.png');
+}
+.dice-image-7 {
+  background-image: url('../assets/dice-side-7.png');
+}
+.dice-image-8 {
+  background-image: url('../assets/dice-side-8.png');
+}
+.dice-image-9 {
+  background-image: url('../assets/dice-side-9.png');
+}
+.dice-image-10 {
+  background-image: url('../assets/dice-side-10.png');
+}
+.dice-image-11 {
+  background-image: url('../assets/dice-side-11.png');
+}
+.dice-image-12 {
+  background-image: url('../assets/dice-side-12.png');
+}
+.dice-image-13 {
+  background-image: url('../assets/dice-side-13.png');
+}
+.dice-image-14 {
+  background-image: url('../assets/dice-side-14.png');
+}
+.dice-image-15 {
+  background-image: url('../assets/dice-side-15.png');
+}
+.dice-image-16 {
+  background-image: url('../assets/dice-side-16.png');
 }
 .dot {
   align-self: center;
