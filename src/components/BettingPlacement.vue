@@ -103,7 +103,7 @@ export default {
 
 <style scoped>
 #betting-placement {
-  background: url("../assets/background-place-a-bet.png") no-repeat;
+  background: url("../assets/background-place-a-bet.png");
   background-size: 100% auto;
   height: 100%;
 }
