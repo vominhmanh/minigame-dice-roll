@@ -107,7 +107,9 @@
         </li>
       </ol>
     </div>
-    <button class="mt-5" type="button" id="roll-button" @click="rollDice">Bắt đầu</button>
+    <div class="mt-5 text-center" >
+      <button type="button" id="roll-button" @click="rollDice">Bắt đầu</button>
+    </div>
   </div>
 </template>
 

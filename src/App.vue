@@ -1,28 +1,29 @@
 <template>
-  <div class="row gx-2" id="dice-roll-app">
-    <div class="col-10 container">
+  <div class="gx-2" id="dice-roll-app">
+    <div class="container">
       <div class="text-center">
-        <img alt="Vue logo" src="./assets/logo.png">
+        <img alt="Vue logo" src="./assets/logo.png" height="250px" class="mt-5">
       </div>
-      <div class="container text-center">
-        <DiceRoll msg="Welcome to Your Vue.js App" class="mb-5" @updateResults="updateResults"/>
-        <div style="position: relative" class="shadow shadow-lg">
-          <BettingPlacement @placeABet="placeABet"/>
-          <div v-if="startDiceRoll"
-               style="position: absolute; width: 100%; height: 100%; background-color: gray; top: 0; opacity: 0.7"></div>
-        </div>
+      <DiceRoll msg="Welcome to Your Vue.js App" class="mb-5" @updateResults="updateResults"/>
+    </div>
+    <div class="row my-3" style="min-height: 400px; margin: 100px 50px">
+      <div class="col-2" v-for="(userChoice, userIndex) in userChoices" :key="userChoice.id">
+        <BettingEach
+            class="mr-2 mb-3"
+            :userChoice="userChoice"
+            :userIndex="userIndex"
+            :results="results"
+            @makeChoice="makeChoice"
+            @clearChoice="clearChoice"
+        />
       </div>
     </div>
-    <div class="col-2 mt-3">
-      <BettingEach
-          v-for="(userChoice, userIndex) in userChoices"
-          :userChoice="userChoice"
-          :userIndex="userIndex"
-          :key="userChoice.id"
-          :results="results"
-          @makeChoice="makeChoice"
-          @clearChoice="clearChoice"
-      />
+    <div class="container">
+      <div style="position: relative" class="shadow shadow-lg">
+        <BettingPlacement @placeABet="placeABet"/>
+        <div v-if="startDiceRoll"
+             style="position: absolute; width: 100%; height: 100%; background-color: gray; top: 0; opacity: 0.7"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -131,9 +132,9 @@ export default {
 }
 
 #dice-roll-app {
-  background: #5f2c82; /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #49a09d, #5f2c82); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #49a09d, #5f2c82); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: url("./assets/Ao_Lang_FO4.png") no-repeat;
+  background-size: 100% auto;
+  width: 100vw;
   height: 100%;
 }
 </style>

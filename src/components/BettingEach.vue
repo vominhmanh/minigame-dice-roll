@@ -1,32 +1,26 @@
 <template>
   <div class="card card-body">
-    <div class="row">
-      <div class="col-9">
-        <div>
-          {{ userIndex + 1 }}.
-          <span>{{userChoice.name || 'Người chơi'}} </span>
-          <span> - {{userChoice.role}}&nbsp;</span>
-          <span class="badge badge-success"> {{userChoice.code}}</span>
-          <span> - {{userChoice.note}}</span>
-        </div>
+    <div class="d-flex justify-content-between mb-2">
+      <span>
+        <span class="badge badge-success"> {{ userChoice.code }}</span>
+        &nbsp;
+        <span>{{ userChoice.name }} </span>
+      </span>
+      <div class="badge badge-success" v-if="userChoice.score > 0" style="width: 30px">{{ userChoice.score }}đ</div>
+      <div class="badge badge-warning" v-if="userChoice.score === 0" style="width: 30px">{{ userChoice.score }}đ</div>
+    </div>
+    <div class="row no-gutters">
+      <div class="col-3 text-center" v-for="[number, index] in getUsersChoices()" :key="index">
+        <img :src="require('@/assets/dice-side-' + index + '.png')" alt="1" width="30">
+        <div>{{ number }}</div>
       </div>
-      <div class="col-3">
-        <button class="btn btn-sm btn-outline text-danger" @click="clearBet()">Xóa</button>
+      <div class="col-3 fw-bold">
+        <button class="btn btn-sm btn-outline text-danger" @click="clearBet()">X</button>
       </div>
+
     </div>
 
-    <div class="row">
-      <div v-for="index in 16" :key="index">
-        <div v-if="userChoice.choices[index] > 0">
-          <button class="btn btn-outline">
-            <img :src="require('@/assets/dice-side-' + index + '.png')" alt="1" width="30">
-            <div v-show="userChoice.choices[index] > 0">{{userChoice.choices[index]}}</div>
-          </button>
-        </div>
-      </div>
-    </div>
     <div>
-      <div v-if="userChoice.score > 0">Điểm số: {{userChoice.score}}</div>
       <div v-if="userChoice.has_joined" class="badge badge-danger"> Người chơi đã từng tham gia</div>
     </div>
   </div>
@@ -50,10 +44,12 @@ export default {
     },
   },
   data: () => {
-    return {
-    }
+    return {}
   },
   methods: {
+    getUsersChoices() {
+      return this?.userChoice.choices.map((number, index) => ([number, index])).filter(([number]) => number > 0)
+    },
     bet(i) {
       this.$emit('makeChoice', i, this.userIndex)
     },

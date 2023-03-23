@@ -1,27 +1,29 @@
 <template>
-  <form class="card card-body m-1">
-    <div class="row">
-      <div class="col-1 py-1">Tên:</div>
-      <div class="col-2 py-1">
-        <input required class="form-control" type="text" id="name" name="name" v-model="name" aria-label="name"/>
-      </div>
-      <div style="display: none" class="col-1 py-1">Role:</div>
-      <div style="display: none" class="col-2 py-1">
-        <input required class="form-control" type="text" id="role" name="role" v-model="role" aria-label="role"/>
-      </div>
-      <div class="col-1 py-1">Mã:</div>
-      <div class="col-2 py-1">
-        <input required class="form-control" type="text" id="code" name="code" v-model="code" aria-label="code"/>
-      </div>
-      <div style="display: none" class="col-1 py-1">Note:</div>
-      <div style="display: none" class="col-2 py-1">
-        <input required class="form-control" type="text" id="note" name="note" v-model="note" aria-label="note"/>
+  <form class="card card-body m-1" id="betting-placement">
+    <div class="card card-body">
+      <div class="row">
+        <div class="col-1 py-1">Tên:</div>
+        <div class="col-2 py-1">
+          <input required class="form-control" type="text" id="name" name="name" v-model="name" aria-label="name"/>
+        </div>
+        <div class="col-1 py-1">Mã:</div>
+        <div class="col-2 py-1">
+          <input required class="form-control" type="text" id="code" name="code" v-model="code" aria-label="code"/>
+        </div>
+        <div class="col-1 py-1">SĐT:</div>
+        <div class="col-2 py-1">
+          <input required class="form-control" type="text" id="role" name="role" v-model="role" aria-label="role"/>
+        </div>
+        <div style="display: none" class="col-1 py-1">Note:</div>
+        <div style="display: none" class="col-2 py-1">
+          <input required class="form-control" type="text" id="note" name="note" v-model="note" aria-label="note"/>
+        </div>
       </div>
     </div>
     <div class="row mt-3 d-flex justify-content-center">
       <div class="col-2 mb-2" v-for="index in 16" :key="index">
-        <button class="btn btn-outline-success" style="position: relative" @click.prevent="bet(index)">
-          <img :src="require('@/assets/dice-side-' + index + '.png')" alt="1" width="80">
+        <button class="btn" style="position: relative" @click.prevent="bet(index)">
+          <img :src="require('@/assets/dice-side-' + index + '.png')" alt="1" width="120">
           <div v-if="choices[index] > 0" class="border border-success rounded-circle"
                style="background-color: green; position: absolute; bottom: 10px; right: 10px; width: 40px; height: 40px">
             <span class="text-light" style="font-size: 20px; font-weight: bold">{{ choices[index] }}</span>
@@ -100,4 +102,9 @@ export default {
 </script>
 
 <style scoped>
+#betting-placement {
+  background: url("../assets/background-place-a-bet.png") no-repeat;
+  background-size: 100% auto;
+  height: 100%;
+}
 </style>
