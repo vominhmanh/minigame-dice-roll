@@ -1,9 +1,10 @@
 <template>
   <div class="gx-2" id="dice-roll-app">
-    <div class="container">
+    <div class="container" style="overflow: visible">
       <div class="text-center">
         <img alt="Vue logo" src="./assets/logo.png" height="250px" class="mt-5">
       </div>
+      <ConfettiExplosion v-if="visible" />
       <DiceRoll msg="Welcome to Your Vue.js App" class="mb-5" @updateResults="updateResults"/>
     </div>
     <div class="row my-3" style="min-height: 400px; margin: 100px 50px">
@@ -37,7 +38,6 @@ import BettingEach from '@/components/BettingEach.vue';
 import DiceRoll from './components/DiceRoll.vue';
 import BettingPlacement from "@/components/BettingPlacement.vue";
 
-
 export default {
   name: 'App',
   components: {
@@ -56,7 +56,8 @@ export default {
         'Quà 1',
         'Quà 2',
         'Quà 3',
-      ]
+      ],
+      visible: false,
     }
   },
   methods: {
@@ -108,11 +109,16 @@ export default {
         }
       }
 
-      setTimeout(() => {
+      setTimeout(async () => {
         this.startDiceRoll = false;
         this.results = results;
         this.userChoices = userChoices
       }, 9000);
+      setTimeout(async () => {
+        this.$confetti.start();
+        setTimeout(() => {this.$confetti.stop();}, 5000)
+      }, 8000);
+
     },
     makeChoice(i, userIndex) {
       let count = this.userChoices[userIndex].count;

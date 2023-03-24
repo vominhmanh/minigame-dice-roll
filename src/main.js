@@ -3,6 +3,8 @@ import App from './App.vue'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import VueSimpleAlert from "vue-simple-alert";
+import VueConfetti from 'vue-confetti'
 
 
 // Import Bootstrap and BootstrapVue CSS files (order is important)
@@ -13,6 +15,8 @@ Vue.config.productionTip = false
 // Make BootstrapVue available throughout your project
 Vue.use(BootstrapVue)
 Vue.use(VueAxios, axios)
+Vue.use(VueSimpleAlert)
+Vue.use(VueConfetti)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 new Vue({

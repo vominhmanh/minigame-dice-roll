@@ -93,6 +93,7 @@ export default {
       this.note = '';
       this.choices.splice(0, 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
       this.count = 0;
+      this.$alert("", 'Thành công !', 'success');
     },
   },
 };
