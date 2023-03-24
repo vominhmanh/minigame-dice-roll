@@ -21,6 +21,7 @@
     </div>
 
     <div>
+      <small v-if="userChoice.gift">{{ userChoice.gift }}</small>
       <div v-if="userChoice.has_joined" class="badge badge-danger"> Người chơi đã từng tham gia</div>
     </div>
   </div>

@@ -1,29 +1,28 @@
 <template>
-  <form class="card card-body m-1" id="betting-placement">
+  <form class="card card-body m-1" id="betting-placement" autocomplete="off">
     <div class="card card-body">
       <div class="row">
         <div class="col-1 py-1">Tên:</div>
         <div class="col-2 py-1">
-          <input required class="form-control" type="text" id="name" name="name" v-model="name" aria-label="name"/>
+          <input required class="form-control" type="text" id="name" name="name" v-model="name" aria-label="name" autocomplete="off"/>
         </div>
         <div class="col-1 py-1">Mã:</div>
         <div class="col-2 py-1">
-          <input required class="form-control" type="text" id="code" name="code" v-model="code" aria-label="code"/>
+          <input required class="form-control" type="text" id="code" name="code" v-model="code" aria-label="code" autocomplete="off"/>
         </div>
         <div class="col-1 py-1">SĐT:</div>
         <div class="col-2 py-1">
-          <input required class="form-control" type="text" id="role" name="role" v-model="role" aria-label="role"/>
+          <input required class="form-control" type="text" id="phone_number" name="phone_number" v-model="phone_number" aria-label="phone_number"/>
         </div>
-        <div style="display: none" class="col-1 py-1">Note:</div>
-        <div style="display: none" class="col-2 py-1">
-          <input required class="form-control" type="text" id="note" name="note" v-model="note" aria-label="note"/>
+        <div class="col-3 py-1 text-right">
+          <button class="btn btn-sm btn-success" @click.prevent="placeABet()">CHỐT !</button>
         </div>
       </div>
     </div>
     <div class="row mt-3 d-flex justify-content-center">
       <div class="col-2 mb-2" v-for="index in 16" :key="index">
         <button class="btn" style="position: relative" @click.prevent="bet(index)">
-          <img :src="require('@/assets/dice-side-' + index + '.png')" alt="1" width="120">
+          <img class="shadow-lg" :src="require('@/assets/dice-side-' + index + '.png')" alt="1" width="120">
           <div v-if="choices[index] > 0" class="border border-success rounded-circle"
                style="background-color: green; position: absolute; bottom: 10px; right: 10px; width: 40px; height: 40px">
             <span class="text-light" style="font-size: 20px; font-weight: bold">{{ choices[index] }}</span>
@@ -35,7 +34,6 @@
     <div class="d-flex justify-content-between mt-2">
       <button class="btn btn-sm btn-outline text-danger" @click.prevent="clearBet()">Chọn lại</button>
       <b class="text-danger" v-if="error">{{ error }}</b>
-      <button class="btn btn-sm btn-success" @click.prevent="placeABet()">CHỐT !</button>
     </div>
   </form>
 </template>
@@ -59,7 +57,7 @@ export default {
     return {
       name: '',
       choices: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      role: '',
+      phone_number: '',
       code: '',
       count: 0,
       note: '',
@@ -88,9 +86,9 @@ export default {
         this.error = 'Vui lòng điền mã code.';
         return;
       }
-      this.$emit('placeABet', this.name, this.role, this.code, this.note, this.choices)
+      this.$emit('placeABet', this.name, this.phone_number, this.code, this.note, this.choices)
       this.name = '';
-      this.role = '';
+      this.phone_number = '';
       this.code = '';
       this.note = '';
       this.choices.splice(0, 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)

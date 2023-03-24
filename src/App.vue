@@ -19,11 +19,15 @@
       </div>
     </div>
     <div class="container">
-      <div style="position: relative" class="shadow shadow-lg">
+      <div class="text-center">
+        <img alt="Vue logo" src="./assets/logo.png" height="250px" class="my-5">
+      </div>
+      <div style="position: relative" class="shadow shadow-lg mb-5">
         <BettingPlacement @placeABet="placeABet"/>
         <div v-if="startDiceRoll"
              style="position: absolute; width: 100%; height: 100%; background-color: gray; top: 0; opacity: 0.7"></div>
       </div>
+      <div>.</div>
     </div>
   </div>
 </template>
@@ -48,6 +52,11 @@ export default {
       startDiceRoll: false,
       readyForNewTurn: false,
       usersHaveJoined: {},
+      gifts: [
+        'Quà 1',
+        'Quà 2',
+        'Quà 3',
+      ]
     }
   },
   methods: {
@@ -64,10 +73,25 @@ export default {
         return user;
       });
 
-      const formattedUserChoices = userChoices.map((user) => ({
-        'code': user.code,
-        'score': user.score,
-      }))
+      const formattedUserChoices = userChoices.map((user) => {
+        let gift = null;
+        if (user.score === 1) {
+          gift = this.gifts[0]
+        }
+        if (user.score === 2) {
+          gift = this.gifts[1]
+        }
+        if (user.score >= 3) {
+          gift = this.gifts[2]
+        }
+        return {
+          name: user.name,
+          code: user.code,
+          score: user.score,
+          phone_number: user.phone_number,
+          gift: gift,
+        }
+      })
 
       if (formattedUserChoices.length > 0) {
         try {
@@ -77,7 +101,8 @@ export default {
           if (Object.keys(usersHaveJoined).length > 0) {
             userChoices = userChoices.map((userChoice) => ({
               ...userChoice,
-              has_joined: !!usersHaveJoined[userChoice.code]
+              has_joined: !!usersHaveJoined[userChoice.code],
+              gift: userChoice.gift,
             }))
           }
         } catch (e) {
@@ -100,7 +125,7 @@ export default {
         this.userChoices.splice(userIndex, 1, {...this.userChoices[userIndex], choices: choices, count: count});
       }
     },
-    placeABet(name, role, code, note, choices) {
+    placeABet(name, phone_number, code, note, choices) {
       if (this.readyForNewTurn) {
         this.userChoices = [];
         this.readyForNewTurn = false
@@ -109,7 +134,7 @@ export default {
         id: Math.random(),
         choices: [...choices],
         name: name,
-        role: role,
+        phone_number: phone_number,
         code: code,
         note: note,
       });
@@ -132,7 +157,7 @@ export default {
 }
 
 #dice-roll-app {
-  background: url("./assets/Ao_Lang_FO4.png") no-repeat;
+  background: url("./assets/Ao_Lang_FO4.png");
   background-size: 100% auto;
   width: 100vw;
   height: 100%;
