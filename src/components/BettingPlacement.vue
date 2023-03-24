@@ -82,8 +82,8 @@ export default {
     },
     placeABet() {
       this.error = '';
-      if (this.code === '') {
-        this.error = 'Vui lòng điền mã code.';
+      if (this.code === '' || this.phone_number === '') {
+        this.error = 'Vui lòng điền mã code và SĐT.';
         return;
       }
       this.$emit('placeABet', this.name, this.phone_number, this.code, this.note, this.choices)

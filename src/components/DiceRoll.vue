@@ -146,7 +146,6 @@ export default {
         this.toggleClasses(die);
         const side = this.getRandomNumber(1, 6);
         const randomNumber = this.getRandomNumber(1, 16);
-        console.log(randomNumber)
         // eslint-disable-next-line no-param-reassign
         die.dataset.roll = side;
         diceItems[side-1].className = diceItems[side-1].className.replace(/dice-image-\d+/g, '')

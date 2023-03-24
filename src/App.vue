@@ -68,41 +68,39 @@ export default {
         results.forEach((result) => {
           score += user.choices[result];
         });
+        let gift = null;
+        if (score === 1) {
+          gift = this.gifts[0]
+        }
+        if (score === 2) {
+          gift = this.gifts[1]
+        }
+        if (score >= 3) {
+          gift = this.gifts[2]
+        }
         // eslint-disable-next-line no-param-reassign
-        user = {...user, score: score};
+        user = {...user, score: score, gift: gift};
         return user;
       });
 
       const formattedUserChoices = userChoices.map((user) => {
-        let gift = null;
-        if (user.score === 1) {
-          gift = this.gifts[0]
-        }
-        if (user.score === 2) {
-          gift = this.gifts[1]
-        }
-        if (user.score >= 3) {
-          gift = this.gifts[2]
-        }
         return {
           name: user.name,
           code: user.code,
           score: user.score,
           phone_number: user.phone_number,
-          gift: gift,
+          gift: user.gift,
         }
       })
 
       if (formattedUserChoices.length > 0) {
         try {
           const response = await this.axios.post('https://chiakhoathongminh.vn/api/campaigns/set-score-for-participants', {scores: formattedUserChoices})
-          console.log(response)
           const usersHaveJoined = response.data.data.participant_have_joined
           if (Object.keys(usersHaveJoined).length > 0) {
             userChoices = userChoices.map((userChoice) => ({
               ...userChoice,
               has_joined: !!usersHaveJoined[userChoice.code],
-              gift: userChoice.gift,
             }))
           }
         } catch (e) {
