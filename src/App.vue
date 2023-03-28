@@ -63,6 +63,9 @@ export default {
   methods: {
     async updateResults(results) {
       this.startDiceRoll = true;
+      const spinningSound = new Audio(require('./assets/spinning_sound_effect.mp3'))
+      const cheeringSound = new Audio(require('./assets/kidcheering.mp3'))
+      await spinningSound.play()
       this.readyForNewTurn = true;
       let userChoices = this.userChoices.map((user) => {
         let score = 0;
@@ -116,6 +119,7 @@ export default {
       }, 9000);
       setTimeout(async () => {
         this.$confetti.start();
+        await cheeringSound.play();
         setTimeout(() => {this.$confetti.stop();}, 5000)
       }, 8000);
 
