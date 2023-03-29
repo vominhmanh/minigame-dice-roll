@@ -4,15 +4,18 @@
       <div class="row">
         <div class="col-1 py-1">Tên:</div>
         <div class="col-2 py-1">
-          <input required class="form-control" type="text" id="name" name="name" v-model="name" aria-label="name" autocomplete="off"/>
+          <input required class="form-control" type="text" id="name" name="name" v-model="name" aria-label="name"
+                 autocomplete="off"/>
         </div>
         <div class="col-1 py-1">Mã:</div>
         <div class="col-2 py-1">
-          <input required class="form-control" type="text" id="code" name="code" v-model="code" aria-label="code" autocomplete="off"/>
+          <input required class="form-control" type="text" id="code" name="code" v-model="code" aria-label="code"
+                 autocomplete="off"/>
         </div>
         <div class="col-1 py-1">SĐT:</div>
         <div class="col-2 py-1">
-          <input required class="form-control" type="text" id="phone_number" name="phone_number" v-model="phone_number" aria-label="phone_number"/>
+          <input required class="form-control" type="text" id="phone_number" name="phone_number" v-model="phone_number"
+                 aria-label="phone_number"/>
         </div>
         <div class="col-3 py-1 text-right">
           <button class="btn btn-sm btn-success" @click.prevent="placeABet()">CHỐT !</button>
@@ -29,7 +32,6 @@
           </div>
         </button>
       </div>
-
     </div>
     <div class="d-flex justify-content-between mt-2">
       <button class="btn btn-sm btn-outline text-danger" @click.prevent="clearBet()">Chọn lại</button>
@@ -39,6 +41,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'BettingPlacement',
   props: {
@@ -86,14 +89,27 @@ export default {
         this.error = 'Vui lòng điền mã code và SĐT.';
         return;
       }
+      const choicesShow = this.choices.map((choice, index) => {
+        if (choice > 0) return `<div class="col-3 text-center" v-for="[number, index] in getUsersChoices()" :key="index">
+        <img src="${require('@/assets/dice-side-' + index + '.png')}" alt="1" width="100">
+        <div class="h5">${choice}</div>
+      </div>`
+      }).filter(choice => !!choice)
+      console.log(choicesShow)
       this.$emit('placeABet', this.name, this.phone_number, this.code, this.note, this.choices)
+      this.$alert(`${this.name} - ${this.code} - ${this.phone_number}`, 'Thành công !', 'success', {
+        html:
+            `<h4 class="mt-5">${this.name} - ${this.code} - ${this.phone_number}</h4>` +
+            `<div class="row d-flex justify-content-center">` +
+            choicesShow.join('') +
+            `</div>`
+      });
       this.name = '';
       this.phone_number = '';
       this.code = '';
       this.note = '';
       this.choices.splice(0, 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
       this.count = 0;
-      this.$alert("", 'Thành công !', 'success');
     },
   },
 };

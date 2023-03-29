@@ -3,7 +3,6 @@
     <div class="d-flex justify-content-between mb-2">
       <span>
         <span class="badge badge-success"> {{ userChoice.code }}</span>
-        &nbsp;
         <span>{{ userChoice.name }} </span>
       </span>
       <div class="badge badge-success" v-if="userChoice.score > 0" style="width: 30px">{{ userChoice.score }}đ</div>
