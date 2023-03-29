@@ -99,7 +99,7 @@ export default {
       this.$emit('placeABet', this.name, this.phone_number, this.code, this.note, this.choices)
       this.$alert(`${this.name} - ${this.code} - ${this.phone_number}`, 'Thành công !', 'success', {
         html:
-            `<h4 class="mt-5">${this.name} - ${this.code} - ${this.phone_number}</h4>` +
+            `<h4 class="mt-5 mb-4">${this.name} - ${this.code} - ${this.phone_number}</h4>` +
             `<div class="row d-flex justify-content-center">` +
             choicesShow.join('') +
             `</div>`
