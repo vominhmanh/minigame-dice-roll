@@ -1,5 +1,8 @@
 # minigame-dice-roll
 
+## node version
+14.21.3
+
 ## Project setup
 ```
 npm install
