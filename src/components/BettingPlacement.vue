@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="row mt-3 d-flex justify-content-center">
-      <div class="col-2 mb-2" v-for="index in 16" :key="index">
+      <div class="col-2 mb-2" v-for="index in 17" :key="index">
         <button class="btn" style="position: relative" @click.prevent="bet(index)">
           <img class="shadow-lg" :src="require('@/assets/dice-side-' + index + '.png')" alt="1" width="120">
           <div v-if="choices[index] > 0" class="border border-success rounded-circle"

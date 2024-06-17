@@ -124,7 +124,7 @@ export default {
     const dice = [...document.querySelectorAll('.die-list')];
     dice.forEach((die) => {
       die.childNodes.forEach((diceItem) => {
-        const randomNumber = this.getRandomNumber(1, 16);
+        const randomNumber = this.getRandomNumber(1, 17);
         diceItem.classList.add(`dice-image-${randomNumber}`)
       })
     })
@@ -145,7 +145,7 @@ export default {
         const diceItems = die.childNodes
         this.toggleClasses(die);
         const side = this.getRandomNumber(1, 6);
-        const randomNumber = this.getRandomNumber(1, 16);
+        const randomNumber = this.getRandomNumber(1, 17);
         // eslint-disable-next-line no-param-reassign
         die.dataset.roll = side;
         diceItems[side-1].className = diceItems[side-1].className.replace(/dice-image-\d+/g, '')
@@ -273,6 +273,9 @@ body {
 }
 .dice-image-16 {
   background-image: url('../assets/dice-side-16.png');
+}
+.dice-image-17 {
+  background-image: url('../assets/dice-side-17.png');
 }
 .dot {
   align-self: center;
