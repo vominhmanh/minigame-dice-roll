@@ -143,7 +143,7 @@ export default {
         choices: [...choices],
         name: name,
         phone_number: phone_number,
-        code: code,
+        code: phone_number,
         note: note,
       });
     },
@@ -165,8 +165,8 @@ export default {
 }
 
 #dice-roll-app {
-  background: url("./assets/Ao_Lang_FO4.png");
-  background-size: 100% auto;
+  background:  linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url("./assets/Ao_Lang_FO4.png");
+  background-size: 110% auto;
   width: 100vw;
   height: 100%;
 }
