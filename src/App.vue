@@ -99,7 +99,7 @@ export default {
 
       if (formattedUserChoices.length > 0) {
         try {
-          const response = await this.axios.post('https://chiakhoathongminh.vn/api/campaigns/set-score-for-participants', {scores: formattedUserChoices})
+          const response = await this.axios.post('https://web.etik.io.vn/api/campaigns/set-score-for-participants', {scores: formattedUserChoices})
           const usersHaveJoined = response.data.data.participant_have_joined
           if (Object.keys(usersHaveJoined).length > 0) {
             userChoices = userChoices.map((userChoice) => ({
